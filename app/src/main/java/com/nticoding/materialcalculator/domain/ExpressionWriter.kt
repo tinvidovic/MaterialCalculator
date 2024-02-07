@@ -19,7 +19,7 @@ class ExpressionWriter {
                     expression += "."
             }
             CalculatorAction.Delete -> {
-                expression.dropLast(1)
+                expression = expression.dropLast(1)
             }
 
             is CalculatorAction.Number -> {
@@ -40,7 +40,7 @@ class ExpressionWriter {
 
     private fun prepareForCalculation(): String {
         // Eliminate any trailing operations
-        val newExpression = expression.takeLastWhile {
+        val newExpression = expression.dropLastWhile {
             it in "$operationSymbols(."
         }
 
@@ -58,7 +58,7 @@ class ExpressionWriter {
 
         expression += when {
             expression.isEmpty() || expression.last() in "$operationSymbols(" -> "("
-            expression.last() in "0123456788)" && openingCount == closingCount -> return
+            expression.last() in "0123456789)" && openingCount == closingCount -> return
             else -> ")" // Need a closing parentheses
         }
     }

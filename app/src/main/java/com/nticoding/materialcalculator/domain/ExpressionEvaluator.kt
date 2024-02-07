@@ -53,7 +53,7 @@ class ExpressionEvaluator(
                 }
                 ExpressionPart.Op(Operation.MODULO) -> {
                     val factor = evaluateFactor(remaining.drop(1))
-                    sum *= (factor.value / 100.0)
+                    sum %= factor.value
                     remaining = factor.remainingExpression
                 }
                 else -> return ExpressionResult(remaining, sum)
